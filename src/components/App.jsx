@@ -1,42 +1,34 @@
-import  {useState, useEffect} from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+// import Loader from './Loader/Loader';
+import ImageGallery from './ImageGallery/ImageGallery';
+import SearchBar from './SearchBar/SearchBar';
+import LoadMoreButton from './LoadMoreButton/LoadMoreButton';
 
-const User = ({dataUsers}) => {
-  
-  return (
-    <div>
-      <h1>User</h1>
-      {dataUsers.map(({ body, id, title }) => (
-        <ul>
-          <li key={id}>{id}: {title} {body}</li>
-        </ul>
-        
-      ))}
-    </div>
-  );
-};
+const API_KEY = 'xSOm-Z_unIVqC8MgDg2y9mEie0lF4PPcCIwRyGMZNsw'
 
 const App = () => {
-  const [data, setDataUsers] = useState([]);
-
+  const [images, setImages] = useState([]);
+  // const [loading, setLoading] = useState(false);  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
-        setDataUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+    async function loadImages() {
+      const response = await axios.get(`https://api.unsplash.com/photos/?client_id=${API_KEY}`);
+      setImages(response.data)
+    }
+    loadImages();
   }, []);
 
+  const onSubmit = (queryText) => { 
+    console.log(queryText);
+  };
+
   return (
-    <>
-      <div>
-        <User dataUsers={data}/>
-      </div>
-    </>
+    <div>
+      <SearchBar onSubmit={onSubmit} />
+      {/* <Loader /> */}
+      {images.length > 0 && <ImageGallery images={images} />}      
+      <LoadMoreButton />
+    </div>
   );
 };
 

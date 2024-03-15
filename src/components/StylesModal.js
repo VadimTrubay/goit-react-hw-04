@@ -1,6 +1,5 @@
 const customStyles = {
   content: {
-    maxHeight: "600px",
     top: "50%",
     left: "50%",
     right: "auto",

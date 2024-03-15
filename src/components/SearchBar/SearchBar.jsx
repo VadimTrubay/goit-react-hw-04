@@ -1,18 +1,18 @@
-import css from './SearchBar.module.css';
+import css from "./SearchBar.module.css";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     if (!searchTerm.trim()) {
       toast.error("Please enter a search term");
       return;
     }
-    onSubmit(searchTerm);
-    e.target[0].value = '';
+    onSearch(searchTerm);
+    e.target[0].value = "";
   };
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <header className={css.search_bar}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSearch}>
         <input
           type="text"
           autoComplete="off"

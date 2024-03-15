@@ -1,17 +1,11 @@
-import ImageCard from '../ImageCard/ImageCard';
-import css from './ImageGallery.module.css';
+import ImageCard from "../ImageCard/ImageCard";
 
-const ImageGallery = ({images}) => {
+const ImageGallery = ({ images, onImageOpen }) => {
   return (
-    <div className={css.image_container}>
-      <ul className={css.image_gallery}>
-        {images.map(({id, urls}) => (<li key={id}>
-          <ImageCard urls={urls} />
-        </li>))};
-      </ul>
-      
-    </div>
-  )
-}
+    <>
+      <ImageCard images={images} onImageOpen={onImageOpen} />
+    </>
+  );
+};
 
 export default ImageGallery;

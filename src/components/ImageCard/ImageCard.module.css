@@ -1,4 +1,18 @@
+.image_gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+  justify-content: flex-start;
+  list-style: none;
+}
+
+.image_container {
+  display: inline-block;
+  margin: 5px;
+}
+
 .image_card {
+  cursor: zoom-in;
   flex: 0 0 calc(33.33% - 10px);
   display: flex;
   flex-direction: row;

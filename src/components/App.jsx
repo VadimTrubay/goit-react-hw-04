@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader/Loader";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import SearchBar from "./SearchBar/SearchBar";
-import LoadMoreButton from "./LoadMoreButton/LoadMoreButton";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import getImages from "./services/imageSearchApi";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageModal from "./ImageModal/ImageModal";
-import Modal from "react-modal";
-import customStyles from "./StylesModal";
-
-Modal.setAppElement("#root");
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -26,7 +22,7 @@ const App = () => {
         setLoading(true);
         const response = await getImages(query, page);
         const cleanData = response.data.results;
-        setImages(images.concat(cleanData));
+        setImages((prevImages) => [...prevImages, ...cleanData]);
       } catch (error) {
         setError(true);
       } finally {
@@ -46,13 +42,11 @@ const App = () => {
     setPage((page) => page + 1);
   };
 
-  function onImageOpen(e) {
+  function onImageOpen(imageId) {
     setModalIsOpen(true);
     if (modalIsOpen) {
       return;
     }
-
-    const imageId = e.target.getAttribute("id");
     const selectedImage = images.find((image) => image.id === imageId);
     setSelectedImage(selectedImage);
   }
@@ -62,40 +56,19 @@ const App = () => {
     setSelectedImage(null);
   }
 
-  useEffect(() => {
-    function keydownClick(evt) {
-      if (evt.code === "Escape") {
-        closeModal();
-      }
-    }
-
-    window.addEventListener("keydown", keydownClick);
-
-    return () => {
-      window.removeEventListener("keydown", keydownClick);
-    };
-  }, []);
-
   return (
     <div>
       <SearchBar onSearch={onSearch} />
       {loading && <Loader />}
       {images && <ImageGallery images={images} onImageOpen={onImageOpen} />}
-      {images.length > 0 && <LoadMoreButton loadPhoto={handleBtnClick} />}
+      {images.length > 0 && <LoadMoreBtn loadPhoto={handleBtnClick} />}
       {error && <ErrorMessage />}
       {selectedImage && (
-        <Modal
-          onRequestClose={closeModal}
-          isOpen={onImageOpen}
-          contentLabel="Modal"
-          style={customStyles}
-        >
-          <ImageModal
-            modalOpen={modalIsOpen}
-            closeModal={closeModal}
-            selectedImage={selectedImage.urls.regular}
-          />
-        </Modal>
+        <ImageModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          selectedImage={selectedImage.urls.regular}
+        />
       )}
     </div>
   );

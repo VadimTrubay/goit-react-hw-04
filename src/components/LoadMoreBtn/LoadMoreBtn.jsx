@@ -1,6 +1,6 @@
-import css from "./LoadMoreButton.module.css";
+import css from "./LoadMoreBtn.module.css";
 
-const LoadMoreButton = ({ loadPhoto }) => {
+const LoadMoreBtn = ({ loadPhoto }) => {
   return (
     <div className={css.load_photo}>
       <button type="button" onClick={loadPhoto}>
@@ -10,4 +10,4 @@ const LoadMoreButton = ({ loadPhoto }) => {
   );
 };
 
-export default LoadMoreButton;
+export default LoadMoreBtn;

@@ -1,6 +1,9 @@
-import css from "./ImageModal.module.css";
+import customStyles from "../StylesModal";
+import Modal from "react-modal";
 
-const ImageModal = ({ selectedImage, closeModal }) => {
+Modal.setAppElement("#root");
+
+const ImageModal = ({ modalIsOpen, selectedImage, closeModal }) => {
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
       closeModal();
@@ -8,9 +11,16 @@ const ImageModal = ({ selectedImage, closeModal }) => {
   };
 
   return (
-    <div onClick={handleBackdropClick}>
-      <img src={selectedImage} className={css.image_card} alt="Image modal" />
-    </div>
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      contentLabel="Modal"
+      style={customStyles}
+    >
+      <div onClick={handleBackdropClick}>
+        <img src={selectedImage} alt="Image modal" />
+      </div>
+    </Modal>
   );
 };
 

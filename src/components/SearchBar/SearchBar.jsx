@@ -12,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
       return;
     }
     onSearch(searchTerm);
-    e.target[0].value = "";
+    setSearchTerm("");
   };
 
   const handleChange = (e) => {

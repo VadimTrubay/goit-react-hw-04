@@ -3,7 +3,7 @@ import Loader from "./Loader/Loader";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import SearchBar from "./SearchBar/SearchBar";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
-import getImages from "./services/imageSearchApi";
+import getImages from "./../services/imageSearchApi";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageModal from "./ImageModal/ImageModal";
 
@@ -20,6 +20,7 @@ const App = () => {
     async function loadImages() {
       try {
         setLoading(true);
+        setError(false);
         const response = await getImages(query, page);
         const cleanData = response.data.results;
         setImages((prevImages) => [...prevImages, ...cleanData]);
@@ -34,7 +35,7 @@ const App = () => {
 
   const onSearch = (queryText) => {
     setImages([]);
-    setError(false);
+    setPage(1);
     setQuery(queryText);
   };
 
@@ -60,7 +61,7 @@ const App = () => {
     <div>
       <SearchBar onSearch={onSearch} />
       {loading && <Loader />}
-      {images && <ImageGallery images={images} onImageOpen={onImageOpen} />}
+      {images.length > 0 && <ImageGallery images={images} onImageOpen={onImageOpen} />}
       {images.length > 0 && <LoadMoreBtn loadPhoto={handleBtnClick} />}
       {error && <ErrorMessage />}
       {selectedImage && (

@@ -4,11 +4,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 const ImageModal = ({ modalIsOpen, selectedImage, closeModal }) => {
-  const handleBackdropClick = (event) => {
-    if (event.target === event.currentTarget) {
-      closeModal();
-    }
-  };
+
 
   return (
     <Modal
@@ -16,8 +12,10 @@ const ImageModal = ({ modalIsOpen, selectedImage, closeModal }) => {
       onRequestClose={closeModal}
       contentLabel="Modal"
       style={customStyles}
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
     >
-      <div onClick={handleBackdropClick}>
+      <div>
         <img src={selectedImage} alt="Image modal" />
       </div>
     </Modal>

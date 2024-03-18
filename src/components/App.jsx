@@ -17,6 +17,7 @@ const App = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    if (!query) return;
     async function loadImages() {
       try {
         setLoading(true);

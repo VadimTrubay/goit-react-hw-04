@@ -1,8 +1,8 @@
 import css from "./SearchBar.module.css";
-import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import {useState} from "react";
+import toast, {Toaster} from "react-hot-toast";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({onSearch}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e) => {
@@ -31,7 +31,7 @@ const SearchBar = ({ onSearch }) => {
           onChange={handleChange}
         />
         <button type="submit">Search</button>
-        <Toaster />
+        <Toaster/>
       </form>
     </header>
   );
